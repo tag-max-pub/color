@@ -38,7 +38,7 @@
 		}
 		string2(o = this) {
 			// console.log('string2', `rgba(${o.r},${o.g},${o.b},${(o.a / 256).toFixed(2)})`)
-			return `rgba(${o.r}, ${o.g}, ${o.b}, ${(o.a / 256).toFixed(2)})`
+			return `rgba(${o.r}, ${o.g}, ${o.b}, ${Math.round(o.a / 256 * 100)}%)`
 		}
 		updateColor() {
 			// let color = this.string();
@@ -65,7 +65,7 @@
 			this.updateGradient(typ);
 			this.$view.Q('#' + typ, 1).addEventListener('input', event => {
 				// console.log(typ, event.target.value);
-				this[typ] = event.target.value*1;
+				this[typ] = event.target.value * 1;
 				this.updateGradient('r');
 				this.updateGradient('g');
 				this.updateGradient('b');
