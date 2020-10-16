@@ -1,0 +1,57 @@
+<script type='module'>
+	import './dist/rgba-picker.tag.js';
+	import './dist/hsla-picker.tag.js';
+	import './dist/noti-fy.tag.js';
+</script>
+
+<noti-fy></noti-fy>
+
+<article>
+	<h1>Color Picker Demo</h1>
+	for usage instructions see <a href='https://github.com/max-pub/color'>GitHub</a>
+	<br />
+	<br />
+	<br />
+
+
+
+	<h2>RGBA picker</h2>
+	<rgba-picker></rgba-picker>
+
+	<br />
+	<br />
+	<br />
+	<br />
+
+	<h2>HSLA picker</h2>
+	<hsla-picker></hsla-picker>
+
+
+</article>
+
+<style>
+	@import url('https://max.pub/css/base.css');
+	@import url('https://max.pub/css/quicksand.css');
+
+	/* * {
+		font-family: Quicksand;
+	} */
+
+	article {
+		text-align: center;
+		background: var(--back-main);
+		width: 20cm;
+		margin: 0 auto;
+		padding: 1rem;
+		box-sizing: border-box;
+	}
+
+	noti-fy {
+		--top: 0;
+		--right: 0;
+	}
+
+	noti-fy::part(noti) {
+		/* color: red; */
+	}
+</style>

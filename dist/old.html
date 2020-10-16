@@ -1,0 +1,177 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" type="text/css" href="/base.css">
+
+<script src='clip.board.js'></script>
+
+<style>
+    .slider {
+        margin-top: 1rem;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 40px;
+        /* background: #d3d3d3; */
+        outline: none;
+        border-radius: 50px;
+        background-image: linear-gradient(to right, hsl(0, 80%, 50%), hsl(20, 80%, 50%), hsl(40, 80%, 50%), hsl(60, 80%, 50%), hsl(80, 80%, 50%), hsl(100, 80%, 50%));
+    }
+
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: black;
+        border: 3px solid white;
+        /* background-image: radial-gradient(circle, black, transparent); */
+        border-radius: 100px;
+        cursor: pointer;
+    }
+
+    .slider:hover::-webkit-slider-thumb {
+        /* border-color: black; */
+        /* background: white; */
+    }
+
+    .slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: black;
+        cursor: pointer;
+        border: 3px solid white;
+        border-radius: 100px;
+    }
+
+
+
+
+    :focus,
+    :active,
+    ::-moz-focus-inner,
+    ::-moz-focus-outer,
+    :-moz-focusring {
+        border: 0 !important;
+        outline: none !important;
+        /* -moz-outline-style: none !important; */
+        color: transparent;
+    }
+
+
+    #color {
+        width: 100%;
+        height: 200px;
+        line-height: 200px;
+        font-size: 30px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+    h1{text-align: center;}
+</style>
+</head>
+
+<main>
+
+    <h1>HSLA picker</h1>
+
+    <!-- <div id='hsl'></div> -->
+    <div id='color'></div>
+    <input type="range" min="0" max="360" value="180" class="slider" id="h">
+    <input type="range" min="0" max="100" value="50" class="slider" id="s">
+    <input type="range" min="0" max="100" value="50" class="slider" id="l">
+    <input type="range" min="0" max="100" value="100" class="slider" id="a">
+
+</main>
+
+
+<script>
+    VAL = { h: 180, s: 50, l: 50, a: 100 };
+    gradient = array => array.map(x => `hsla(${x.h}, ${x.s}%, ${x.l}%, ${x.a}%)`).join(',');
+
+    function range(typ) {
+        let val = JSON.parse(JSON.stringify(VAL));
+        return new Array(typ == 'h' ? 36 : 10).fill(1).map((x, i) => ({ ...val, ...{ [typ]: i * 10 } }));
+    }
+    function updateColor() {
+        let hsl = `hsla(${VAL.h}, ${VAL.s}%, ${VAL.l}%, ${VAL.a}%)`;
+        document.querySelector('#color').style.background = hsl;
+        document.querySelector('#color').innerHTML = hsl;
+    }
+
+    function updateGradient(typ) { document.querySelector('#' + typ).style.backgroundImage = `linear-gradient(to right, ${gradient(range(typ))})`; }
+
+    function addListener(typ) {
+        updateGradient(typ);
+        document.querySelector('#' + typ).addEventListener('input', event => {
+            VAL[typ] = event.target.value;
+            updateGradient('h');
+            updateGradient('s');
+            updateGradient('l');
+            updateGradient('a');
+            updateColor();
+        });
+
+    }
+    addListener('h');
+    addListener('s');
+    addListener('l');
+    addListener('a');
+    updateColor();
+
+
+document.querySelector('#color').addEventListener('click',event=>{
+    copyToClipboard(event.target.innerHTML);
+})
+
+
+//     function setClipboardText(text){
+//     var id = "mycustom-clipboard-textarea-hidden-id";
+//     var existsTextarea = document.getElementById(id);
+
+//     if(!existsTextarea){
+//         console.log("Creating textarea");
+//         var textarea = document.createElement("textarea");
+//         textarea.id = id;
+//         // Place in top-left corner of screen regardless of scroll position.
+//         textarea.style.position = 'fixed';
+//         textarea.style.top = 0;
+//         textarea.style.left = 0;
+
+//         // Ensure it has a small width and height. Setting to 1px / 1em
+//         // doesn't work as this gives a negative w/h on some browsers.
+//         textarea.style.width = '1px';
+//         textarea.style.height = '1px';
+
+//         // We don't need padding, reducing the size if it does flash render.
+//         textarea.style.padding = 0;
+
+//         // Clean up any borders.
+//         textarea.style.border = 'none';
+//         textarea.style.outline = 'none';
+//         textarea.style.boxShadow = 'none';
+
+//         // Avoid flash of white box if rendered for any reason.
+//         textarea.style.background = 'transparent';
+//         document.querySelector("body").appendChild(textarea);
+//         console.log("The textarea now exists :)");
+//         existsTextarea = document.getElementById(id);
+//     }else{
+//         console.log("The textarea already exists :3")
+//     }
+
+//     existsTextarea.value = text;
+//     existsTextarea.select();
+
+//     try {
+//         var status = document.execCommand('copy');
+//         if(!status){
+//             console.error("Cannot copy text");
+//         }else{
+//             console.log("The text is now on the clipboard");
+//         }
+//     } catch (err) {
+//         console.log('Unable to copy.');
+//     }
+// }
+</script>

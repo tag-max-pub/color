@@ -1,0 +1,149 @@
+<htm>
+	<main>
+		<!-- <h1>HSLA picker</h1> -->
+		<!-- <div id='hsl'></div> -->
+		<div id='color' on-tap='copy'></div>
+		<input type="range" min="0" max="360" id="h">
+		<input type="range" min="0" max="100" id="s">
+		<input type="range" min="0" max="100" id="l">
+		<input type="range" min="0" max="100" id="a">
+
+	</main>
+</htm>
+
+
+<script>
+	class {
+		h = 180;
+		s = 50;
+		l = 50;
+		a = 90;
+
+		$onReady() {
+			this.addListener('h');
+			this.addListener('s');
+			this.addListener('l');
+			this.addListener('a');
+			this.updateColor();
+		}
+		copy(node) {
+			import('https://max.pub/lib/data.js').then(x => x.copy(node.innerHTML));
+			this.$event('notification', { text: `copied\n${node.innerHTML}\nto clipboard` })
+		}
+		string(o = this) {
+			return `hsla(${o.h}, ${o.s}%, ${o.l}%, ${o.a}%)`
+		}
+		updateColor() {
+			let hsl = this.string();
+			this.$view.Q('#color', 1).style.background = hsl;
+			this.$view.Q('#color', 1).innerHTML = hsl;
+		}
+		range(typ) {
+			return new Array(typ == 'h' ? 36 : 10).fill(1).map((x, i) => ({ ...this, ...{ [typ]: i * 10 } }));
+		}
+		gradient(array) {
+			return array.map(x => this.string(x)).join(','); //`hsla(${x.h}, ${x.s}%, ${x.l}%, ${x.a}%)`
+		}
+
+		updateGradient(typ) {
+			this.$view.Q('#' + typ, 1).style.backgroundImage = `linear-gradient(to right, ${this.gradient(this.range(typ))})`;
+		}
+
+		addListener(typ) {
+			this.$view.Q('#' + typ, 1).value = this[typ];
+			this.updateGradient(typ);
+			this.$view.Q('#' + typ, 1).addEventListener('input', event => {
+				this[typ] = event.target.value;
+				this.updateGradient('h');
+				this.updateGradient('s');
+				this.updateGradient('l');
+				this.updateGradient('a');
+				this.updateColor();
+			});
+
+		}
+
+	}
+</script>
+
+
+<style>
+	:host {
+		display: inline-block;
+		/* border: 1px solid red; */
+		/* background: #222; */
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	input {
+		padding: 0;
+		margin-top: .3rem;
+		-webkit-appearance: none;
+		width: 100%;
+		height: 40px;
+		/* background: #d3d3d3; */
+		outline: none;
+		border-radius: 50px;
+		/* background-image: linear-gradient(to right, hsl(0, 80%, 50%), hsl(20, 80%, 50%), hsl(40, 80%, 50%), hsl(60, 80%, 50%), hsl(80, 80%, 50%), hsl(100, 80%, 50%)); */
+	}
+
+
+	input::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		background: black;
+		border: 3px solid white;
+		/* background-image: radial-gradient(circle, black, transparent); */
+		border-radius: 100px;
+		cursor: pointer;
+	}
+
+	input:hover::-webkit-slider-thumb {
+		/* border-color: black; */
+		/* background: white; */
+	}
+
+	input::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		background: black;
+		cursor: pointer;
+		border: 3px solid white;
+		border-radius: 100px;
+	}
+
+
+
+
+	:focus,
+	:active,
+	::-moz-focus-inner,
+	::-moz-focus-outer,
+	:-moz-focusring {
+		border: 0 !important;
+		outline: none !important;
+		/* -moz-outline-style: none !important; */
+		color: transparent;
+	}
+
+
+	#color {
+		width: 100%;
+		height: 200px;
+		line-height: 200px;
+		font-size: 30px;
+		border-radius: 10px;
+		text-align: center;
+		cursor: pointer;
+	}
+	#color:hover {
+		color: black;
+	}
+
+</style>
