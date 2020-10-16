@@ -201,11 +201,10 @@ class rgba_picker extends WebTag {
 			this.$event('notification', { text: `copied\n${node.innerHTML}\nto clipboard` })
 		}
 		string(o = this) {
-			console.log('string', o.r, o.r.toString(16), o.g.toString(16), o.b.toString(16), o.a.toString(16))
 			return '#' + o.r.toString(16) + o.g.toString(16) + o.b.toString(16) + o.a.toString(16);
 		}
 		string2(o = this) {
-			return `rgba(${o.r},${o.g},${o.b},${(o.a / 256).toFixed(2)})`
+			return `rgba(${o.r}, ${o.g}, ${o.b}, ${(o.a / 256).toFixed(2)})`
 		}
 		updateColor() {
 			this.$view.Q('#color', 1).style.background = this.string2();
