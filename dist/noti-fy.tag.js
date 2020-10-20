@@ -22,7 +22,7 @@ HTML.innerHTML = ``;
 let STYLE = document.createElement('style');
 STYLE.appendChild(document.createTextNode(`:host {
 		display: inline-block;
-		position: absolute;
+		position: fixed;
 		top: var(--top);
 		bottom: var(--bottom);
 		left: var(--left);
@@ -30,7 +30,7 @@ STYLE.appendChild(document.createTextNode(`:host {
 		font-family: Arial, Helvetica, sans-serif;
 	}
 	div {
-		background: var(--back-main,silver);
+		background: var(--back-main, silver);
 		/* color: white; */
 		padding: .5rem;
 		margin: .5rem;
@@ -92,7 +92,7 @@ class noti_fy extends WebTag {
 			console.log('show notification', x);
 			let noti = NODE('div', { part: 'noti' }, x.text);
 			this.$view.appendChild(noti);
-			setTimeout(e => this.$view.removeChild(noti), this.$frame.timeout ?? 1000)
+			setTimeout(e => this.$view.removeChild(noti), this.getAttribute('timeout') ?? 1000)
 		}
 	}
 window.customElements.define('noti-fy', noti_fy)
