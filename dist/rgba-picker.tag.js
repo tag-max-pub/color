@@ -35,7 +35,8 @@ STYLE.appendChild(document.createTextNode(`:host {
 		display: inline-block;
 		/* border: 1px solid red; */
 		/* background: #222; */
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: publicSans, quicksand, Arial, Helvetica, sans-serif;
+		border: 2px solid silver;
 	}
 	* {
 		box-sizing: border-box;
@@ -47,7 +48,7 @@ STYLE.appendChild(document.createTextNode(`:host {
 		/* margin-top: .3rem; */
 		-webkit-appearance: none;
 		width: 100%;
-		height: 40px;
+		height: 50px;
 		/* background: #d3d3d3; */
 		outline: none;
 		/* border-radius: 50px; */
