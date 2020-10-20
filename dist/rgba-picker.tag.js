@@ -42,13 +42,15 @@ STYLE.appendChild(document.createTextNode(`:host {
 	}
 	input {
 		padding: 0;
-		margin-top: .3rem;
+		margin: 0;
+		/* border: 2px solid transparent; */
+		/* margin-top: .3rem; */
 		-webkit-appearance: none;
 		width: 100%;
 		height: 40px;
 		/* background: #d3d3d3; */
 		outline: none;
-		border-radius: 50px;
+		/* border-radius: 50px; */
 		/* background-image: linear-gradient(to right, hsl(0, 80%, 50%), hsl(20, 80%, 50%), hsl(40, 80%, 50%), hsl(60, 80%, 50%), hsl(80, 80%, 50%), hsl(100, 80%, 50%)); */
 	}
 	input::-webkit-slider-thumb {
@@ -57,7 +59,7 @@ STYLE.appendChild(document.createTextNode(`:host {
 		width: 20px;
 		height: 20px;
 		background: black;
-		border: 3px solid white;
+		border: 1px solid white;
 		/* background-image: radial-gradient(circle, black, transparent); */
 		border-radius: 100px;
 		cursor: pointer;
@@ -80,7 +82,7 @@ STYLE.appendChild(document.createTextNode(`:host {
 		height: 20px;
 		background: black;
 		cursor: pointer;
-		border: 3px solid white;
+		border: 1px solid white;
 		border-radius: 100px;
 	}
 	#r::-moz-range-thumb {
@@ -107,7 +109,7 @@ STYLE.appendChild(document.createTextNode(`:host {
 		height: 200px;
 		/* line-height: 50px; */
 		font-size: 30px;
-		border-radius: 10px;
+		/* border-radius: 10px; */
 		text-align: center;
 		cursor: pointer;
 	}

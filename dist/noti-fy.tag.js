@@ -83,17 +83,6 @@ class WebTag extends HTMLElement {
 			HTML = new DOMParser().parseFromString(HTML, 'text/html').firstChild
 		this.$view.appendChild(HTML);
 	}
-	get $frame() {  // attributes
-		return new Proxy(
-			Object.fromEntries(Array.from(this.attributes).map(x => [x.nodeName, x.nodeValue])),
-			{
-				set: (target, key, value) => {
-					this.setAttribute(key, value);
-					return Reflect.set(target, key, value);
-				}
-			}
-		)
-	}
 };
 class noti_fy extends WebTag {
 		$onReady() {
